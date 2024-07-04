@@ -101,7 +101,7 @@ fun CommonArticleBox(
                 tint = colorResource(id = R.color.gray_700)
             )
             Text(
-                text = likeCount.toString(),
+                text = viewCount.toString(),
                 modifier = Modifier.padding(end = 12.dp),
                 color = colorResource(id = R.color.gray_700),
                 fontSize = 12.sp
