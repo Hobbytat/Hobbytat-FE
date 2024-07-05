@@ -23,7 +23,7 @@ import com.example.hobbytat.R
 @Composable
 fun RankBox(
     rank: Int,
-    hobbyType: String,
+    boardType: String,
     percentage: Int
 ) {
     Row(
@@ -56,7 +56,7 @@ fun RankBox(
                 )
             )
             Text(
-                text = hobbyType, fontSize = 14.sp,
+                text = boardType, fontSize = 14.sp,
                 color = if (rank == 1) colorResource(id = R.color.main_blue_dark) else colorResource(
                     id = R.color.gray_600
                 )

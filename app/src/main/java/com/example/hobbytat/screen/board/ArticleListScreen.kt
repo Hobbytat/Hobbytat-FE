@@ -8,28 +8,43 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
 import com.example.hobbytat.common.Appbar
 import com.example.hobbytat.common.CommonArticleBox
 import com.example.hobbytat.common.CommonTopBar
+import com.example.hobbytat.viewModel.ArticlesViewModel
 
 @Composable
 fun ArticleListScreen(navController: NavHostController, boardId: Int) {
+    val viewModel: ArticlesViewModel = viewModel()
 
-    val title = when (boardId) {
+    val articles by viewModel.articles.observeAsState()
+
+    LaunchedEffect(boardId) {
+        viewModel.fetchArticles(boardId) // Fetch articles from API
+    }
+
+    val boardType = when (boardId) {
         1 -> "공예가"
         2 -> "스포츠맨"
         3 -> "예술가"
@@ -74,7 +89,7 @@ fun ArticleListScreen(navController: NavHostController, boardId: Int) {
         ) {
             Column {
                 Text(
-                    text = "${title}의 하비탯", fontSize = 16.sp,
+                    text = "${boardType}의 하비탯", fontSize = 16.sp,
                     fontWeight = FontWeight.Black,
                     color = colorResource(R.color.main_blue_dark)
                 )
@@ -100,25 +115,27 @@ fun ArticleListScreen(navController: NavHostController, boardId: Int) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            LazyColumn {
-                // 여기 데이터 받아오기 수정
-                items(5) { index ->
-                    val articleId = index + 1
+            articles?.let { articlesData ->
+                LazyColumn {
+                    items(articlesData.data) { article ->
+                        CommonArticleBox(
+                            title = article.title,
+                            boardType = boardType,
+                            userName = article.member_nickname,
+                            viewCount = article.view_count,
+                            likeCount = article.like_count,
+                            commentCount = article.reply_count,
+                            order = article.article_id
+                        ) {
+                            navController.navigate("Article/${article.article_id}/${boardId}")
+                        }
 
-                    CommonArticleBox(
-                        "파리 올림픽 같이 응원해요",
-                        "스포츠맨의 하비탯",
-                        "손흥민",
-                        12,
-                        12,
-                        12,
-                        order = articleId
-                    ) {
-                        navController.navigate("Article/$articleId/$boardId")
+                        Spacer(modifier = Modifier.height(20.dp))
                     }
-
-                    Spacer(modifier = Modifier.height(20.dp))
                 }
+            } ?: run {
+                // 데이터가 로딩 중일 때 표시할 UI
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
         }
     }
