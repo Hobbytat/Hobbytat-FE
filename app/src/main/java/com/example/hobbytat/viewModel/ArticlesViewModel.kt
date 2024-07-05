@@ -42,20 +42,20 @@ data class Reply(
 )
 
 interface ArticleService {
-    @GET("boards/{boardId}/articles")
+    @GET("/boards/{boardId}/articles?article_id={articleId}")
     suspend fun getArticles(
         @Path("boardId") boardId: Int,
-        @Query("article_id") articleId: Int? = null
+        @Query("articleId") articleId: Int? = null
     ): Articles
 
     @GET("/boards/{boardId}/articles/{articleId}")
     suspend fun getArticleById(
         @Path("boardId") boardId: Int,
-        @Path("boardId") articleId: Int,
+        @Query("articleId") articleId: Int
     ): Article
 }
 
-class ArticlesViewModel: ViewModel() {
+class ArticlesViewModel : ViewModel() {
     private val _articles = MutableLiveData<Articles>()
     val articles: LiveData<Articles> = _articles
 
