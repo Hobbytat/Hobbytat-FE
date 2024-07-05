@@ -82,6 +82,7 @@ fun LoginScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(30.dp))
             LoginButton(label = "로그인") {
+                // 로그인 버튼 구현
                 navController.navigate("Home")
             }
             Spacer(modifier = Modifier.height(30.dp))
@@ -93,7 +94,12 @@ fun LoginScreen(navController: NavHostController) {
             Image(
                 painter = painterResource(id = R.drawable.ic_kakao),
                 contentDescription = "카카오 로그인",
-                modifier = Modifier.size(50.dp)
+                modifier = Modifier
+                    .height(50.dp)
+                    .width(50.dp)
+                    .clickable {
+                        // 카카오 로그인 구현
+                    }
             )
         }
         Row(

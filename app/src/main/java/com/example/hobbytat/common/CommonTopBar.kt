@@ -25,3 +25,15 @@ fun CommonTopBar(navController: NavHostController) {
         )
     })
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun signupTopBar() {
+
+    TopAppBar(title = {
+        Image(
+            painterResource(id = R.drawable.logo_blue), contentDescription = "로고 이미지",
+            modifier = Modifier.size(width = 78.dp, height = 28.dp)
+        )
+    })
+}
