@@ -47,7 +47,7 @@ fun ArticleScreen(navController: NavHostController, boardId: Int) {
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { /* TODO: Add action here */ },
+                onClick = { navController.navigate("PostArticle") },
                 icon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_plus),
@@ -75,7 +75,7 @@ fun ArticleScreen(navController: NavHostController, boardId: Int) {
             Column {
                 Text(
                     text = "${title}의 하비탯", fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Black,
                     color = colorResource(R.color.main_blue_dark)
                 )
                 Text(text = "게시판에 오신 것을 환영합니다 ~", fontSize = 16.sp)

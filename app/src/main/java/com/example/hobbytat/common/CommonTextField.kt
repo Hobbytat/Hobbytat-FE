@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.hobbytat.R
 
@@ -25,6 +24,8 @@ import com.example.hobbytat.R
 fun CommonTextField(
     title: String,
     value: String,
+    imeAction: ImeAction,
+    modifier: Modifier,
     onValueChange: (String) -> Unit
 ) {
     Column {
@@ -37,8 +38,10 @@ fun CommonTextField(
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier
-                .fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                imeAction = imeAction
+            ),
+            modifier = modifier,
             decorationBox = { innerTextField ->
                 Row(
                     modifier = Modifier
@@ -48,7 +51,7 @@ fun CommonTextField(
                             shape = RoundedCornerShape(size = 16.dp)
                         )
                         .padding(all = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.Top,
                 ) {
                     innerTextField()
                 }
