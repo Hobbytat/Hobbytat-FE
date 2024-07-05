@@ -10,6 +10,8 @@ import com.example.hobbytat.screen.board.ArticleListScreen
 import com.example.hobbytat.screen.board.ArticleScreen
 import com.example.hobbytat.screen.board.BoardScreen
 import com.example.hobbytat.screen.board.PostArticleScreen
+import com.example.hobbytat.screen.mypage.ChangeProfileScreen
+import com.example.hobbytat.screen.mypage.MypageScreen
 import com.example.hobbytat.screen.sign.LoginScreen
 import com.example.hobbytat.screen.sign.SignupAgreeScreen
 import com.example.hobbytat.screen.sign.SignupIdScreen
@@ -66,7 +68,11 @@ fun NavGraph(navController: NavHostController) {
 
         // 마이페이지 화면
         composable(route = "MyPage") {
-
+            MypageScreen(navController)
+        }
+        // 내 정보 수정 화면
+        composable(route = "ChangeMy"){
+            ChangeProfileScreen(navController)
         }
 
         // 게시글 리스트 화면
