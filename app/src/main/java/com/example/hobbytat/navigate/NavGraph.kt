@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.hobbytat.screen.HomeScreen
+import com.example.hobbytat.screen.board.ArticleScreen
 import com.example.hobbytat.screen.board.BoardScreen
 import com.example.hobbytat.screen.sign.SplashScreen
 
@@ -23,7 +24,7 @@ fun NavGraph(navController: NavHostController) {
         }
         composable(route="SignUp_agree") {
             // 회원가입_동의 화면
-            HomeScreen(navController)
+
         }
 
         // 홈화면
@@ -44,6 +45,12 @@ fun NavGraph(navController: NavHostController) {
         // 마이페이지 화면
         composable(route = "MyPage") {
 
+        }
+
+        // ArticleScreen 화면
+        composable("Article/{boardId}") { backStackEntry ->
+            val boardId = backStackEntry.arguments?.getString("boardId")?.toInt() ?: 0
+            ArticleScreen(navController, boardId)
         }
     }
 }

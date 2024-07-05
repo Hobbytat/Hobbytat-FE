@@ -34,6 +34,9 @@ fun HomeScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             CommonTopBar(navController)
+        },
+        bottomBar = {
+            Appbar(selected = 1, navController = navController)
         }
     ) { paddingValues ->
         Column(
@@ -44,8 +47,8 @@ fun HomeScreen(navController: NavHostController) {
         ) {
 
             Text(
-                text = "유형 순위", fontSize = 16.sp, fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
+                text = "유형 순위", fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp)
             )
 
             Column(
@@ -70,7 +73,7 @@ fun HomeScreen(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // 추후에 1위 이름 받아오기로 수정예정
-                Text(text = "지적인 취미 공예가 유형")
+                Text(text = "지적인 취미 공예가 유형", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -85,10 +88,10 @@ fun HomeScreen(navController: NavHostController) {
                 RankBox(3, "스포츠맨 유형", 10)
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "이번주 인기글", fontSize = 16.sp, fontWeight = FontWeight.Bold,
+                text = "이번주 인기글", fontSize = 18.sp, fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
@@ -100,12 +103,12 @@ fun HomeScreen(navController: NavHostController) {
                     12,
                     12,
                     12,
-                    order = 2
+                    order = 1
                 ) {
 
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 CommonArticleBox(
                     "파리 올림픽 같이 응원해요",
@@ -118,13 +121,26 @@ fun HomeScreen(navController: NavHostController) {
                 ) {
 
                 }
+                Spacer(modifier = Modifier.height(20.dp))
+
+                CommonArticleBox(
+                    "파리 올림픽 같이 응원해요",
+                    "스포츠맨의 하비탯",
+                    "손흥민",
+                    12,
+                    12,
+                    12,
+                    order = 3
+                ) {
+
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
             }
 
 
         }
     }
-
-    Appbar(selected = 1, navController = navController)
 
 
 }

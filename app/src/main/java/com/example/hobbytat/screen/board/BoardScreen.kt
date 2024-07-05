@@ -48,12 +48,15 @@ fun BoardScreen(navController: NavHostController) {
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-//                verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 // 여기 나중에 데이터 받아오게 수정
-                    items(5) {
-                        HobbytatBox(title = "예술가의 하비탯", onClick = { /* Do something */ })
+                    items(5) {index ->
+                        val boardId = index + 1 // 예시로 index를 사용하여 board_id 생성
+
+                        HobbytatBox(title = "예술가의 하비탯", onClick = {
+                            navController.navigate("Article/$boardId")
+                        })
                     }
             }
 
