@@ -1,5 +1,6 @@
 package com.example.hobbytat.screen.sign
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -38,8 +39,7 @@ import com.example.hobbytat.common.signupTopBar
 import com.example.hobbytat.viewModel.QuestionViewModel
 
 @Composable
-fun SignupQuestionScreen(navController: NavHostController) {
-    val questionViewModel: QuestionViewModel = viewModel()
+fun SignupQuestionScreen(navController: NavHostController,questionViewModel: QuestionViewModel) {
     val questions by questionViewModel.questions.observeAsState(emptyList())
     val currentQuestionIndex by questionViewModel.currentQuestionIndex.observeAsState(0)
     val answers by questionViewModel.answers.observeAsState(emptyMap())
@@ -161,7 +161,9 @@ fun SignupQuestionScreen(navController: NavHostController) {
                         Button(
                             onClick = {
                                       // 확인 버튼 클릭 시 실행할 동작
-                                      navController.navigate("Home")
+                                      navController.navigate("SignUp_nickname")
+
+                                Log.d("SignupQuestionScreen", "현재 answers: $answers")
                             },
                             enabled = isAllAnswered,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
