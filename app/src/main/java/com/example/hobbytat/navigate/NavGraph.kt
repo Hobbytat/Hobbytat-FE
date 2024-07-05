@@ -11,11 +11,12 @@ import com.example.hobbytat.screen.board.BoardScreen
 import com.example.hobbytat.screen.board.PostArticleScreen
 import com.example.hobbytat.screen.sign.LoginScreen
 import com.example.hobbytat.screen.sign.SignupAgreeScreen
+import com.example.hobbytat.screen.sign.SignupQuestionScreen
 import com.example.hobbytat.screen.sign.SplashScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "Home"){
+    NavHost(navController = navController, startDestination = "SignUp_Question"){
         // 스플래쉬, 로그인, 회원가입 화면
         composable(route = "Splash") {
             // 스플래쉬 화면
@@ -28,6 +29,10 @@ fun NavGraph(navController: NavHostController) {
         composable(route="SignUp_agree") {
             // 회원가입_동의 화면
             SignupAgreeScreen(navController)
+        }
+        composable(route="SignUp_Question") {
+            // 회원가입_검사 화면
+            SignupQuestionScreen(navController)
         }
 
         // 홈화면

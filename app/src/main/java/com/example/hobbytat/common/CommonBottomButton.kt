@@ -59,22 +59,26 @@ fun WhiteCommonBottomButton(
 }
 
 @Composable
-fun LoginButton(
+fun BlueButton(
     label: String,
-    onClick: () -> Unit,
+    corner : Int,
+    fontSize : Int,
+    height : Int,
+    color : Int,
+    onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .height(45.dp),
-        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.main_blue)),
-        shape = RoundedCornerShape(8.dp)
+            .height(height.dp),
+        colors = ButtonDefaults.buttonColors(colorResource(id = color)),
+        shape = RoundedCornerShape(corner.dp)
     ) {
         Text(
             text = label,
-            fontSize = 16.sp,
+            fontSize = fontSize.sp,
             fontWeight = FontWeight.Bold
         )
     }
