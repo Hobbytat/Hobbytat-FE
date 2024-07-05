@@ -64,6 +64,7 @@ fun SplashScreen(navController: NavHostController) {
         Column {
             WhiteCommonBottomButton(label = "회원가입") {
                 // 설문조사 동의 페이지로 이동
+                navController.navigate("SignUp_agree")
             }
             WhiteCommonBottomButton(label = "로그인") {
                 // 로그인 페이지로 이동
