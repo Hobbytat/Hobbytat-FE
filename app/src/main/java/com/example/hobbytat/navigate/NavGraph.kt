@@ -7,8 +7,6 @@ import androidx.navigation.compose.composable
 import com.example.hobbytat.screen.HomeScreen
 import com.example.hobbytat.screen.board.ArticleScreen
 import com.example.hobbytat.screen.board.BoardScreen
-import com.example.hobbytat.screen.sign.LoginScreen
-import com.example.hobbytat.screen.sign.SignupAgreeScreen
 import com.example.hobbytat.screen.sign.SplashScreen
 
 @Composable
@@ -21,11 +19,13 @@ fun NavGraph(navController: NavHostController) {
         }
         composable(route="Login") {
             // 로그인 화면
-            LoginScreen(navController)
+//            LoginScreen(navController)
+            HomeScreen(navController)
         }
         composable(route="SignUp_agree") {
             // 회원가입_동의 화면
-            SignupAgreeScreen(navController)
+//            SignupAgreeScreen(navController)
+            HomeScreen(navController)
         }
 
         // 홈화면

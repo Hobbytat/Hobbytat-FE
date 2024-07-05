@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,6 +44,27 @@ fun ArticleScreen(navController: NavHostController, boardId: Int) {
         },
         bottomBar = {
             Appbar(selected = 3, navController = navController)
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = { /* TODO: Add action here */ },
+                icon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_plus),
+                        contentDescription = "플러스 아이콘",
+                    )
+                },
+                text = {
+                    Text(
+                        text = "글쓰기",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                containerColor = colorResource(id = R.color.main_blue),
+                contentColor = colorResource(id = R.color.main_blue_bg),
+                shape = RoundedCornerShape(100.dp)
+            )
         }
     ) { paddingValues ->
         Column(
@@ -57,7 +80,7 @@ fun ArticleScreen(navController: NavHostController, boardId: Int) {
                 )
                 Text(text = "게시판에 오신 것을 환영합니다 ~", fontSize = 16.sp)
             }
-            
+
             Spacer(modifier = Modifier.height(20.dp))
 
             Row(
