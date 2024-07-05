@@ -3,7 +3,9 @@ package com.example.hobbytat.common
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,6 +54,28 @@ fun WhiteCommonBottomButton(
         Text(
             text = label,
             color= colorResource(R.color.main_blue),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun LoginButton(
+    label: String,
+    onClick: () -> Unit,
+) {
+    Button(
+        onClick = onClick,
+        contentPadding = PaddingValues(12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(45.dp),
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.main_blue)),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Text(
+            text = label,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )

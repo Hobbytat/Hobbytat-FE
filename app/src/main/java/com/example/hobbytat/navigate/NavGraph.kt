@@ -11,13 +11,19 @@ import com.example.hobbytat.screen.sign.SplashScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "Splash") {
+    NavHost(navController = navController, startDestination = "Login"){
         // 스플래쉬, 로그인, 회원가입 화면
         composable(route = "Splash") {
+            // 스플래쉬 화면
             SplashScreen(navController)
         }
-        composable(route = "Login") {
-            LoginScreen()
+        composable(route="Login") {
+            // 로그인 화면
+            LoginScreen(navController)
+        }
+        composable(route="SignUp_agree") {
+            // 회원가입_동의 화면
+
         }
 
         // 홈화면
