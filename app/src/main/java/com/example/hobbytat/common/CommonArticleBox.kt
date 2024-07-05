@@ -2,6 +2,7 @@ package com.example.hobbytat.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,8 +32,16 @@ fun CommonArticleBox(
     userName: String,
     viewCount: Int,
     likeCount: Int,
-    commentCount: Int
+    commentCount: Int,
+    order: Int,
+    onClick: () -> Unit,
 ) {
+    val backgroundColor = if (order % 2 == 0) {
+        colorResource(id = R.color.main_blue_bg)
+    } else {
+        colorResource(id = R.color.white)
+    }
+
     Column(
         modifier = Modifier
             .border(
@@ -41,9 +50,10 @@ fun CommonArticleBox(
                 shape = RoundedCornerShape(16.dp)
             )
             .background(
-                colorResource(id = R.color.main_blue_light),
+                color = backgroundColor,
                 shape = RoundedCornerShape(16.dp)
             )
+            .clickable(onClick = onClick)
             .padding(top = 16.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
             .height(120.dp)
@@ -146,6 +156,9 @@ private fun Preview() {
         "손흥민",
         12,
         12,
-        12
-    )
+        12,
+        order = 1
+    ) {
+
+    }
 }
