@@ -1,6 +1,7 @@
 package com.example.hobbytat.screen.mypage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,13 +19,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +39,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -64,6 +70,9 @@ fun MypageScreen(navController: NavHostController) {
     }
     var userTypeExplain by remember{
         mutableStateOf("예술적인 공예가는 예술적이고 어쩌고")
+    }
+    var expended by rememberSaveable {
+        mutableStateOf(false)
     }
 
     Scaffold(
@@ -106,10 +115,58 @@ fun MypageScreen(navController: NavHostController) {
                             Text(text = userType, fontSize = 12.sp, color = colorResource(id = R.color.gray_500))
                         }
                     }
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_kebab),
-                        contentDescription = "더보기"
-                    )
+                    Box(){
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_kebab),
+                            contentDescription = "더보기",
+                            modifier = Modifier
+                                .clickable { expended = true }
+                        )
+                        DropdownMenu(
+                            expanded = expended,
+                            onDismissRequest = { expended = false },
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.White)
+                        ) {
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = "로그아웃",
+                                        fontSize = 12.sp,
+                                        color = Color.Gray,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                },
+                                onClick = {
+                                    expended = false
+                                    navController.navigate("Login")
+                                },
+                                modifier = Modifier
+                                    .size(90.dp, 20.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = "프로필 수정",
+                                        fontSize = 12.sp,
+                                        color = Color.Gray,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                },
+                                onClick = {
+                                    expended = false
+                                    navController.navigate("ChangeMy")
+                                },
+                                modifier = Modifier
+                                    .size(90.dp, 20.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                        }
+                    }
                 }
 
                 Box(
@@ -257,7 +314,7 @@ fun MypageScreen(navController: NavHostController) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.character_craftsman),
+                            painter = painterResource(id = R.drawable.character_arthobbycrafter),
                             contentDescription = "user 유형 이미지",
                             modifier = Modifier.size(200.dp)
                         )
