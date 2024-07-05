@@ -23,7 +23,7 @@ import com.example.hobbytat.viewModel.QuestionViewModel
 @Composable
 fun NavGraph(navController: NavHostController) {
     val questionViewModel: QuestionViewModel = viewModel()
-    NavHost(navController = navController, startDestination = "Board"){
+    NavHost(navController = navController, startDestination = "Splash"){
         // 스플래쉬, 로그인, 회원가입 화면
         composable(route = "Splash") {
             // 스플래쉬 화면
@@ -82,8 +82,10 @@ fun NavGraph(navController: NavHostController) {
         }
 
         // 게시글 작성하기 화면
-        composable(route = "PostArticle") {
-            PostArticleScreen(navController)
+        composable(route = "PostArticle/{boardId}") {backStackEntry ->
+            val boardId = backStackEntry.arguments?.getString("boardId")?.toInt() ?: 0
+
+            PostArticleScreen(navController, boardId)
         }
 
         // 게시글 화면

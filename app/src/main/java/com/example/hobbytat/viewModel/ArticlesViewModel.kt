@@ -1,12 +1,15 @@
 package com.example.hobbytat.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hobbytat.retrofit.RetrofitInstance
 import kotlinx.coroutines.launch
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -16,30 +19,48 @@ data class Articles(
 )
 
 data class Article(
-    val article_id: Int,
-    val board_id: Int,
-    val member_id: Int,
-    val member_nickname: String,
+    val articleId: Int,
+    val boardId: Int,
+    val memberId: Int,
+    val memberNickname: String,
     val title: String,
     val content: String,
     val img: String,
-    val view_count: Int,
-    val like_count: Int,
-    val reply_count: Int,
+    val viewCount: Int,
+    val likeCount: Int,
+    val replyCount: Int,
     val replies: List<Reply>,
-    val is_member_like: Boolean,
-    val created_at: String,
-    val modified_at: String
+    val isMemberLike: Boolean,
+    val createdAt: String,
+    val modifiedAt: String
 )
-
 
 data class Reply(
-    val reply_id: Int,
-    val reply_member_id: Int,
-    val reply_member_name: String,
-    val reply_created_at: String,
-    val reply_content: String
+    val replyId: Int,
+    val replyMemberId: Int,
+    val replyMemberName: String,
+    val replyCreatedAt: String,
+    val replyContent: String
 )
+
+data class PostArticleRequest(
+    val title: String,
+    val content: String,
+    val img: String
+)
+
+data class PostArticleResponse(
+    val isSuccess: Boolean,
+    val status: Int,
+    val articleId: Int,
+    val boardId: Int,
+    val memberId: Int,
+    val title: String,
+    val content: String,
+    val img: String,
+    val createdAt: String
+)
+
 
 interface ArticleService {
     @GET("/boards/{boardId}/articles?article_id={articleId}")
@@ -53,6 +74,12 @@ interface ArticleService {
         @Path("boardId") boardId: Int,
         @Query("articleId") articleId: Int
     ): Article
+
+    @POST("/boards/{boardId}/articles")
+    suspend fun postArticle(
+        @Path("boardId") boardId: Int,
+        @Body request: PostArticleRequest
+    ): PostArticleResponse
 }
 
 class ArticlesViewModel : ViewModel() {
@@ -61,6 +88,10 @@ class ArticlesViewModel : ViewModel() {
 
     private val _article = MutableLiveData<Article>()
     val article: LiveData<Article> = _article
+
+    private val _postArticleResponse = MutableLiveData<PostArticleResponse>()
+    val postArticleResponse: LiveData<PostArticleResponse> = _postArticleResponse
+
 
     val retrofit = RetrofitInstance.retrofit
     val articleService = retrofit.create(ArticleService::class.java)
@@ -80,7 +111,21 @@ class ArticlesViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = articleService.getArticleById(boardId, articleId)
+                Log.d("asdf", response.toString())
                 _article.value = response
+            } catch (e: Exception) {
+                // 예외 처리
+                Log.d("asdf", "asdfasdfadsf")
+            }
+        }
+    }
+
+    fun postArticle(boardId: Int, title: String, content: String, img: String) {
+        viewModelScope.launch {
+            try {
+                val request = PostArticleRequest(title, content, img)
+                val response = articleService.postArticle(boardId, request)
+                _postArticleResponse.value = response
             } catch (e: Exception) {
                 // 예외 처리
             }

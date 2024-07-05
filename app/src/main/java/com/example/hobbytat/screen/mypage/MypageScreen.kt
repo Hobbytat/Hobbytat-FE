@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
@@ -45,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
 import com.example.hobbytat.common.Appbar
-import com.example.hobbytat.common.CommonArticleBox
 import com.example.hobbytat.common.CommonTopBar
 
 @Composable
@@ -69,7 +67,7 @@ fun MypageScreen(navController: NavHostController) {
         mutableStateOf(false)
     }
     var userTypeExplain by remember{
-        mutableStateOf("예술적인 공예가는 예술적이고 어쩌고")
+        mutableStateOf("예술적인 공예가는 예술적이고 귀엽습니다!")
     }
     var expended by rememberSaveable {
         mutableStateOf(false)

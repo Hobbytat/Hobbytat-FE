@@ -127,6 +127,7 @@ fun HomeScreen(navController: NavHostController) {
                         order = 1
                     ) {
 
+                        navController.navigate("Article/${2}/${1}")
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -141,6 +142,7 @@ fun HomeScreen(navController: NavHostController) {
                         order = 2
                     ) {
 
+                        navController.navigate("Article/${2}/${1}")
                     }
                     Spacer(modifier = Modifier.height(20.dp))
 
@@ -153,7 +155,7 @@ fun HomeScreen(navController: NavHostController) {
                         12,
                         order = 3
                     ) {
-
+                        navController.navigate("Article/${2}/${1}")
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))

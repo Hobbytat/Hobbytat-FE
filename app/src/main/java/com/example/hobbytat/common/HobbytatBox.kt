@@ -11,21 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
 
 @Composable
 fun HobbytatBox(
-    img: String,
     title: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    img: Painter
 ) {
     Column {
         Image(
-            painter = rememberImagePainter(data = img),
-            contentDescription = "하비탯이미지",
+            painter = img, contentDescription = "하비탯이미지",
             modifier = Modifier
                 .clip(RoundedCornerShape(12.dp))
                 .clickable(onClick = onClick)
