@@ -7,22 +7,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
 import com.example.hobbytat.common.Appbar
 import com.example.hobbytat.common.CommonTopBar
 import com.example.hobbytat.common.HobbytatBox
+import com.example.hobbytat.viewModel.BoardsViewModel
 
 @Composable
 fun BoardScreen(navController: NavHostController) {
+    var viewModel: BoardsViewModel = viewModel()
+
+    val boards by viewModel.boards.observeAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchBoards()
+    }
 
     Scaffold(
         topBar = {
@@ -50,14 +63,13 @@ fun BoardScreen(navController: NavHostController) {
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                // 여기 나중에 데이터 받아오게 수정
-                    items(5) {index ->
-                        val boardId = index + 1 // 예시로 index를 사용하여 board_id 생성
-
-                        HobbytatBox(title = "예술가의 하비탯", onClick = {
-                            navController.navigate("ArticleList/$boardId")
+                boards?.let {
+                    items(it.data) {board ->
+                        HobbytatBox(title = board.title, onClick = {
+                            navController.navigate("ArticleList/${board.board_id}")
                         })
                     }
+                }
             }
 
         }
