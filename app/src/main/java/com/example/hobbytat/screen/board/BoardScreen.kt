@@ -55,7 +55,7 @@ fun BoardScreen(navController: NavHostController) {
                         val boardId = index + 1 // 예시로 index를 사용하여 board_id 생성
 
                         HobbytatBox(title = "예술가의 하비탯", onClick = {
-                            navController.navigate("Article/$boardId")
+                            navController.navigate("ArticleList/$boardId")
                         })
                     }
             }

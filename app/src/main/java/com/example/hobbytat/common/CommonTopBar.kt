@@ -19,9 +19,11 @@ fun CommonTopBar(navController: NavHostController) {
     TopAppBar(title = {
         Image(
             painterResource(id = R.drawable.logo_blue), contentDescription = "로고 이미지",
-            modifier = Modifier.size(width = 78.dp, height = 28.dp).clickable {
-                navController.navigate("Home")
-            }
+            modifier = Modifier
+                .size(width = 78.dp, height = 28.dp)
+                .clickable {
+                    navController.navigate("Home")
+                }
         )
     })
 }

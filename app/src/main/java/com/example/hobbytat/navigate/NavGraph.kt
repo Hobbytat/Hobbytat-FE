@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.hobbytat.screen.HomeScreen
+import com.example.hobbytat.screen.board.ArticleListScreen
 import com.example.hobbytat.screen.board.ArticleScreen
 import com.example.hobbytat.screen.board.BoardScreen
 import com.example.hobbytat.screen.board.PostArticleScreen
@@ -49,15 +50,23 @@ fun NavGraph(navController: NavHostController) {
 
         }
 
-        // 게시글 화면
-        composable("Article/{boardId}") { backStackEntry ->
+        // 게시글 리스트 화면
+        composable("ArticleList/{boardId}") { backStackEntry ->
             val boardId = backStackEntry.arguments?.getString("boardId")?.toInt() ?: 0
-            ArticleScreen(navController, boardId)
+            ArticleListScreen(navController, boardId)
         }
 
         // 게시글 작성하기 화면
         composable(route = "PostArticle") {
             PostArticleScreen(navController)
+        }
+
+        // 게시글 화면
+        composable("Article/{articleId}/{boardId}") { backStackEntry ->
+            val articleId = backStackEntry.arguments?.getString("articleId")?.toInt() ?: 0
+            val boardId = backStackEntry.arguments?.getString("boardId")?.toInt() ?: 0
+
+            ArticleScreen(navController, articleId, boardId)
         }
     }
 }
