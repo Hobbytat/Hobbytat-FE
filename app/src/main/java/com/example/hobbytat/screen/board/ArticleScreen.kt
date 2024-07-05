@@ -24,7 +24,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -53,7 +52,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import com.example.hobbytat.R
 import com.example.hobbytat.common.Comment
 import com.example.hobbytat.viewModel.ArticlesViewModel
@@ -76,6 +74,15 @@ fun ArticleScreen(navController: NavHostController, articleId: Int, boardId: Int
         5 -> "탐험가"
         else -> "기타"
     }
+
+    var title = "예술가 완전 별로임"
+    var userName = "나는야 스포츠맨"
+    var profileImg = painterResource(id = R.drawable.sample_profile)
+    var date = "2024-07-04"
+    var content = "걔네 완전 예술가인척 해\n" +
+            "스포츠를 해야 건강하지 연약한 것들"
+    var likeCount = 12
+    var commentCount = 12
 
     val scollState = rememberScrollState()
 
@@ -184,114 +191,122 @@ fun ArticleScreen(navController: NavHostController, articleId: Int, boardId: Int
                 .verticalScroll(scollState)
                 .padding(paddingValues)
         ) {
-            article?.let { article ->
-                Column(
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            ) {
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text(text = article.title, fontSize = 18.sp, fontWeight = Bold)
-                            Spacer(modifier = Modifier.height(8.dp))
+                    Column {
+                        Text(text = title, fontSize = 18.sp, fontWeight = Bold)
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = profileImg,
+                                contentDescription = "프로필이미지",
+                                modifier = Modifier
+                                    .size(35.dp)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop,
+                            )
+                            Column(
+                                modifier = Modifier.padding(start = 12.dp)
                             ) {
-                                Image(
-                                    painter = rememberAsyncImagePainter(article.img),
-                                    contentDescription = "프로필이미지",
-                                    modifier = Modifier
-                                        .size(35.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop,
+
+                                Text(
+                                    text = userName,
+                                    fontSize = 12.sp,
+                                    color = colorResource(id = R.color.gray_600)
                                 )
-
-                                Column(
-                                    modifier = Modifier.padding(start = 12.dp)
-                                ) {
-
-                                    Text(
-                                        text = article.member_nickname,
-                                        fontSize = 12.sp,
-                                        color = colorResource(id = R.color.gray_600)
-                                    )
-                                    Text(
-                                        text = article.created_at,
-                                        fontSize = 12.sp,
-                                        color = colorResource(id = R.color.gray_600)
-                                    )
-                                }
+                                Text(
+                                    text = date,
+                                    fontSize = 12.sp,
+                                    color = colorResource(id = R.color.gray_600)
+                                )
                             }
                         }
-
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_kebab),
-                            contentDescription = "케밥버튼"
-                        )
                     }
 
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    Text(text = article.content, fontSize = 14.sp)
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.icon_like),
-                            contentDescription = "좋아요 아이콘",
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .size(20.dp),
-                        )
-                        Text(
-                            text = "${article.like_count} Likes",
-                            modifier = Modifier.padding(end = 12.dp),
-                            color = colorResource(id = R.color.gray_700),
-                            fontSize = 12.sp
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.icon_comment),
-                            contentDescription = "댓글 아이콘",
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .size(20.dp),
-                            tint = colorResource(id = R.color.gray_700)
-                        )
-                        Text(
-                            text = "${article.reply_count} Comments",
-                            color = colorResource(id = R.color.gray_700),
-                            fontSize = 12.sp
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_kebab),
+                        contentDescription = "케밥버튼"
+                    )
                 }
 
-                Divider()
+                Spacer(modifier = Modifier.height(24.dp))
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                Text(text = content, fontSize = 14.sp)
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    article.replies.forEach { reply ->
-                        Comment(
-                            reply.reply_member_name,
-                            reply.reply_created_at,
-                            reply.reply_content
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.icon_like),
+                        contentDescription = "좋아요 아이콘",
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(20.dp),
+                    )
+                    Text(
+                        text = "$likeCount Likes",
+                        modifier = Modifier.padding(end = 12.dp),
+                        color = colorResource(id = R.color.gray_700),
+                        fontSize = 12.sp
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.icon_comment),
+                        contentDescription = "댓글 아이콘",
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(20.dp),
+                        tint = colorResource(id = R.color.gray_700)
+                    )
+                    Text(
+                        text = "$commentCount Comments",
+                        color = colorResource(id = R.color.gray_700),
+                        fontSize = 12.sp
+                    )
                 }
-            } ?: run {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
+
+            Divider()
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
+                Comment(
+                    "예술적인 공예가", "2024-07-04", "어떻게 그런 말을 해?"
+                )
             }
         }
-
     }
 
 }

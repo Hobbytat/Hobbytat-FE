@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -19,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -115,28 +111,42 @@ fun ArticleListScreen(navController: NavHostController, boardId: Int) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            articles?.let { articlesData ->
-                LazyColumn {
-                    items(articlesData.data) { article ->
-                        CommonArticleBox(
-                            title = article.title,
-                            boardType = boardType,
-                            userName = article.member_nickname,
-                            viewCount = article.view_count,
-                            likeCount = article.like_count,
-                            commentCount = article.reply_count,
-                            order = article.article_id
-                        ) {
-                            navController.navigate("Article/${article.article_id}/${boardId}")
-                        }
+//            articles?.let { articlesData ->
+//                LazyColumn {
+//                    items(articlesData.data) { article ->
+//                        CommonArticleBox(
+//                            title = "파리올림픽 같이 응원해요",
+//                            boardType = boardType,
+//                            userName = "손흥민",
+//                            viewCount = 12,
+//                            likeCount = 12,
+//                            commentCount = 12,
+//                            order = article.articleId
+//                        ) {
+//                            navController.navigate("Article/${article.articleId}/${boardId}")
+//                        }
+//
+//                        Spacer(modifier = Modifier.height(20.dp))
+//                    }
+//                }
+//            } ?: run {
+//                // 데이터가 로딩 중일 때 표시할 UI
+//                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+//            }
 
-                        Spacer(modifier = Modifier.height(20.dp))
-                    }
-                }
-            } ?: run {
-                // 데이터가 로딩 중일 때 표시할 UI
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            CommonArticleBox(
+                title = "파리올림픽 같이 응원해요",
+                boardType = boardType,
+                userName = "손흥민",
+                viewCount = 12,
+                likeCount = 12,
+                commentCount = 12,
+                order = 1
+            ) {
+                navController.navigate("Article/${2}/${1}")
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }

@@ -24,16 +24,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
 import com.example.hobbytat.common.CommonBottomButton
 import com.example.hobbytat.common.CommonTextField
 import com.example.hobbytat.common.CommonTopBar
+import com.example.hobbytat.viewModel.ArticlesViewModel
 
 @Composable
-fun PostArticleScreen(navController: NavHostController) {
+fun PostArticleScreen(navController: NavHostController, boardId: Int) {
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
+
+    val viewModel: ArticlesViewModel = viewModel()
 
     Scaffold(
         topBar = {
@@ -74,18 +78,36 @@ fun PostArticleScreen(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                CommonTextField(title = "제목*", value = title, imeAction = ImeAction.Next, modifier = Modifier.fillMaxWidth()) {
+                CommonTextField(
+                    title = "제목*",
+                    value = title,
+                    imeAction = ImeAction.Next,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     title = it
                 }
                 Spacer(modifier = Modifier.height(20.dp))
 
-                CommonTextField(title = "상세 내용*", value = content, imeAction = ImeAction.Done, modifier = Modifier.fillMaxWidth().height(200.dp)) {
+                CommonTextField(
+                    title = "상세 내용*",
+                    value = content,
+                    imeAction = ImeAction.Done,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                ) {
                     content = it
                 }
             }
-            
-            CommonBottomButton(label = "등록하기", modifier = Modifier.fillMaxWidth().padding(bottom = 40.dp)) {
-                
+
+            CommonBottomButton(
+                label = "등록하기",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 40.dp)
+            ) {
+                viewModel.postArticle(1, title, content, "")
+                navController.navigate("Home")
             }
         }
     }
