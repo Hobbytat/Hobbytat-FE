@@ -5,8 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -19,9 +21,11 @@ fun CommonTopBar(navController: NavHostController) {
     TopAppBar(title = {
         Image(
             painterResource(id = R.drawable.logo_blue), contentDescription = "로고 이미지",
-            modifier = Modifier.size(width = 78.dp, height = 28.dp).clickable {
-                navController.navigate("Home")
-            }
+            modifier = Modifier
+                .size(width = 78.dp, height = 28.dp)
+                .clickable {
+                    navController.navigate("Home")
+                }
         )
     })
 }
@@ -36,4 +40,15 @@ fun signupTopBar() {
             modifier = Modifier.size(width = 78.dp, height = 28.dp)
         )
     })
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LongTopBar() {
+    TopAppBar(title = {
+        Image(
+            painterResource(id = R.drawable.logo_white), contentDescription = "로고 이미지",
+            modifier = Modifier.size(width = 78.dp, height = 28.dp)
+        )}
+    )
 }
