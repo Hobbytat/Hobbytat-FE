@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hobbytat.R
@@ -21,16 +20,17 @@ import com.example.hobbytat.R
 @Composable
 fun CommonBottomButton(
     label: String,
+    modifier: Modifier,
     onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(12.dp),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.main_blue)),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Text(text = label)
+        Text(text = label, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(id = R.color.main_blue_bg))
     }
 }
 
@@ -81,17 +81,5 @@ fun BlueButton(
             fontSize = fontSize.sp,
             fontWeight = FontWeight.Bold
         )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    CommonBottomButton("등록하기") {
-
-    }
-
-    WhiteCommonBottomButton("회원가입"){
-
     }
 }
