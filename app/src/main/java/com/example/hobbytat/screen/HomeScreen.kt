@@ -10,26 +10,37 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
 import com.example.hobbytat.common.Appbar
 import com.example.hobbytat.common.CommonArticleBox
 import com.example.hobbytat.common.CommonTopBar
 import com.example.hobbytat.common.RankBox
+import com.example.hobbytat.viewModel.TypeRankViewModel
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-
     val scollState = rememberScrollState()
+    val typeRankViewModel: TypeRankViewModel = viewModel()
+    val typeRanks by typeRankViewModel.typeRanks.observeAsState()
+
+    LaunchedEffect(Unit) {
+        typeRankViewModel.fetchTypeRanks()
+    }
 
     Scaffold(
         topBar = {
@@ -64,7 +75,7 @@ fun HomeScreen(navController: NavHostController) {
 
                     // 추후에 이미지 받아오기로 수정예정
                     Image(
-                        painter = painterResource(id = R.drawable.character_craftsman),
+                        painter = painterResource(id = R.drawable.character_hobbycrafter),
                         contentDescription = "1위캐릭터",
                         Modifier.size(150.dp)
                     )
@@ -79,13 +90,17 @@ fun HomeScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(8.dp))
 
             // 추후 데이터 받아오기로 수정예정
-            Column {
-
-                RankBox(1, "지적인 취미 공예가 유형", 40)
-                Spacer(modifier = Modifier.height(10.dp))
-                RankBox(2, "예술가 유형", 20)
-                Spacer(modifier = Modifier.height(10.dp))
-                RankBox(3, "스포츠맨 유형", 10)
+            typeRanks?.let { rankList ->
+                rankList.forEach { rank ->
+                    RankBox(
+                        rank = rank.rank,
+                        boardType = rank.hobbyType,
+                        percentage = rank.percent
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+            } ?: run {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
 
             Spacer(modifier = Modifier.height(32.dp))
