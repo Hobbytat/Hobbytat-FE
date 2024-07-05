@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
+import com.example.hobbytat.common.Appbar
 import com.example.hobbytat.common.CommonArticleBox
 import com.example.hobbytat.common.CommonTopBar
 import com.example.hobbytat.common.RankBox
@@ -122,6 +123,8 @@ fun HomeScreen(navController: NavHostController) {
 
         }
     }
+
+    Appbar(selected = 1, navController = navController)
 
 
 }
