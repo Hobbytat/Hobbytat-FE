@@ -12,6 +12,7 @@ import com.example.hobbytat.screen.board.BoardScreen
 import com.example.hobbytat.screen.board.PostArticleScreen
 import com.example.hobbytat.screen.sign.LoginScreen
 import com.example.hobbytat.screen.sign.SignupAgreeScreen
+import com.example.hobbytat.screen.sign.SignupIdScreen
 import com.example.hobbytat.screen.sign.SignupNicknameScreen
 import com.example.hobbytat.screen.sign.SignupQuestionScreen
 import com.example.hobbytat.screen.sign.SplashScreen
@@ -20,7 +21,7 @@ import com.example.hobbytat.viewModel.QuestionViewModel
 @Composable
 fun NavGraph(navController: NavHostController) {
     val questionViewModel: QuestionViewModel = viewModel()
-    NavHost(navController = navController, startDestination = "SignUp_nickname"){
+    NavHost(navController = navController, startDestination = "SignUp_id"){
         // 스플래쉬, 로그인, 회원가입 화면
         composable(route = "Splash") {
             // 스플래쉬 화면
@@ -42,6 +43,11 @@ fun NavGraph(navController: NavHostController) {
             // 회원가입_닉네임 화면
             SignupNicknameScreen(navController)
         }
+        composable(route = "SignUp_id") {
+            // 회원가입_아이디 화면
+            SignupIdScreen(navController)
+        }
+
 
         // 홈화면
         composable(route = "Home") {
