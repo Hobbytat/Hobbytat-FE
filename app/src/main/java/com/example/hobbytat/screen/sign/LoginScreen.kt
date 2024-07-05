@@ -29,8 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.hobbytat.R
-import com.example.hobbytat.common.CommonBottomButton
-import com.example.hobbytat.common.LoginButton
+import com.example.hobbytat.common.BlueButton
 import com.example.hobbytat.common.LoginTextField
 
 @Composable
@@ -83,7 +82,7 @@ fun LoginScreen(navController: NavHostController) {
                 hint = "비밀번호"
             )
             Spacer(modifier = Modifier.height(30.dp))
-            LoginButton(label = "로그인") {
+            BlueButton(label = "로그인",8,16, 45, R.color.main_blue) {
                 // 로그인 버튼 구현
                 navController.navigate("Home")
             }
