@@ -21,7 +21,7 @@ import com.example.hobbytat.viewModel.QuestionViewModel
 @Composable
 fun NavGraph(navController: NavHostController) {
     val questionViewModel: QuestionViewModel = viewModel()
-    NavHost(navController = navController, startDestination = "SignUp_id"){
+    NavHost(navController = navController, startDestination = "Board"){
         // 스플래쉬, 로그인, 회원가입 화면
         composable(route = "Splash") {
             // 스플래쉬 화면

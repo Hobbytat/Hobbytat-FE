@@ -62,100 +62,118 @@ fun HomeScreen(navController: NavHostController) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Box {
-                    Image(
-                        painter = painterResource(id = R.drawable.back_light),
-                        contentDescription = "후광이미지",
-                        Modifier.size(150.dp)
-                    )
+            typeRanks?.let { rankList ->
+                val topRank = rankList.firstOrNull()
+                if (topRank != null) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box {
+                            Image(
+                                painter = painterResource(id = R.drawable.back_light),
+                                contentDescription = "후광이미지",
+                                Modifier.size(150.dp)
+                            )
 
-                    // 추후에 이미지 받아오기로 수정예정
-                    Image(
-                        painter = painterResource(id = R.drawable.character_hobbycrafter),
-                        contentDescription = "1위캐릭터",
-                        Modifier.size(150.dp)
-                    )
+                            val imageRes = getHobbyTypeImage(topRank.hobbyType)
+                            Image(
+                                painter = painterResource(id = imageRes),
+                                contentDescription = "1위캐릭터",
+                                Modifier.size(150.dp)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = topRank.hobbyType,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // 추후에 1위 이름 받아오기로 수정예정
-                Text(text = "지적인 취미 공예가 유형", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                typeRanks?.let { rankList ->
+                    rankList.forEach { rank ->
+                        RankBox(
+                            rank = rank.rank,
+                            boardType = rank.hobbyType,
+                            percentage = rank.percent
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                } ?: run {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Text(
+                    text = "이번주 인기글", fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                Column {
+                    CommonArticleBox(
+                        "파리 올림픽 같이 응원해요",
+                        "스포츠맨의 하비탯",
+                        "손흥민",
+                        12,
+                        12,
+                        12,
+                        order = 1
+                    ) {
+
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    CommonArticleBox(
+                        "파리 올림픽 같이 응원해요",
+                        "스포츠맨의 하비탯",
+                        "손흥민",
+                        12,
+                        12,
+                        12,
+                        order = 2
+                    ) {
+
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    CommonArticleBox(
+                        "파리 올림픽 같이 응원해요",
+                        "스포츠맨의 하비탯",
+                        "손흥민",
+                        12,
+                        12,
+                        12,
+                        order = 3
+                    ) {
+
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // 추후 데이터 받아오기로 수정예정
-            typeRanks?.let { rankList ->
-                rankList.forEach { rank ->
-                    RankBox(
-                        rank = rank.rank,
-                        boardType = rank.hobbyType,
-                        percentage = rank.percent
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-            } ?: run {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "이번주 인기글", fontSize = 18.sp, fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            Column {
-                CommonArticleBox(
-                    "파리 올림픽 같이 응원해요",
-                    "스포츠맨의 하비탯",
-                    "손흥민",
-                    12,
-                    12,
-                    12,
-                    order = 1
-                ) {
-
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                CommonArticleBox(
-                    "파리 올림픽 같이 응원해요",
-                    "스포츠맨의 하비탯",
-                    "손흥민",
-                    12,
-                    12,
-                    12,
-                    order = 2
-                ) {
-
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-
-                CommonArticleBox(
-                    "파리 올림픽 같이 응원해요",
-                    "스포츠맨의 하비탯",
-                    "손흥민",
-                    12,
-                    12,
-                    12,
-                    order = 3
-                ) {
-
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-            }
-
-
         }
     }
+}
 
-
+@Composable
+fun getHobbyTypeImage(hobbyType: String): Int {
+    return when (hobbyType) {
+        "ARTIST" -> R.drawable.character_artist
+        "EXPLORER" -> R.drawable.character_explorer
+        "SPORTSMAN" -> R.drawable.character_sportsman
+        "HOBBYCRAFTER" -> R.drawable.character_hobbycrafter
+        "KNOWLEDGESEEKER" -> R.drawable.character_knowledgeseeker
+        "ARTHOBBYCRAFTER" -> R.drawable.character_arthobbycrafter
+        "KNOWLEDGESPORTSMAN" -> R.drawable.character_knowledgesportsman
+        "KNOWLEDGEHOBBYCRAFTER" -> R.drawable.character_knoledgehobbycrafter
+        else -> R.drawable.character_artist // 여기 수정?
+    }
 }

@@ -1,13 +1,10 @@
 package com.example.hobbytat.screen.board
 
-import androidx.compose.foundation.layout.Arrangement
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,18 +21,18 @@ import androidx.navigation.NavHostController
 import com.example.hobbytat.R
 import com.example.hobbytat.common.Appbar
 import com.example.hobbytat.common.CommonTopBar
-import com.example.hobbytat.common.HobbytatBox
 import com.example.hobbytat.viewModel.BoardsViewModel
 
 @Composable
 fun BoardScreen(navController: NavHostController) {
-    var viewModel: BoardsViewModel = viewModel()
-
+    val viewModel: BoardsViewModel = viewModel()
     val boards by viewModel.boards.observeAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchBoards()
     }
+
+    Log.d("board", boards.toString())
 
     Scaffold(
         topBar = {
@@ -59,18 +56,20 @@ fun BoardScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                boards?.let {
-                    items(it.data) {board ->
-                        HobbytatBox(title = board.title, onClick = {
-                            navController.navigate("ArticleList/${board.board_id}")
-                        })
-                    }
-                }
-            }
+//            LazyVerticalGrid(
+//                columns = GridCells.Fixed(2),
+//                horizontalArrangement = Arrangement.spacedBy(20.dp)
+//            ) {
+//                boards?.let {
+//                    items(it.data) {board ->
+//                        HobbytatBox(title = board.title, onClick = {
+//                            navController.navigate("ArticleList/${board.board_id}")
+//                        })
+//                    }
+//                }
+//            }
+
+
 
         }
     }
